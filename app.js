@@ -7,11 +7,27 @@ const a =await  fs.readFile("c:\\Users\\dell\\OneDrive\\Desktop\\ff.mp4 - Shortc
 console.log(a.byteLength)c:\Users\dell\OneDrive\Desktop\fff.mp4
 console.timeEnd()*/
 console.time()
-const read =fs.createReadStream("c:\\Users\\dell\\OneDrive\\Desktop\\fff.mp4",{highWaterMark : 100*1024*1024})
+let count=0
+const read =fs.createReadStream("c:\\Users\\dell\\OneDrive\\Desktop\\fff.mp4",{highWaterMark : 1*1024*1024})
 
-read.on('data',(chunkbuffer)=>{
-  console.log(chunkbuffer)
-  console.log(chunkbuffer.byteLength)
+read.on("data",(chunkbuffer)=>{
+//  console.log(chunkbuffer)
+  //console.log(chunkbuffer.byteLength)
+  fs.appendFileSync(" bas.mp4" , chunkbuffer)
+         
+  count++;
+  })
 
+  read.on( "end",()=>{
+
+     console.log({count})
+  })
+let readcount =0
+const readStream = fs.createReadStream("data.txt" , {highWaterMark : 4})
+readStream.on('data' , (chunk)=>{
+         console.log(chunk.byteLength)
+         readcount++;
 })
-console.timeEnd()
+readStream.on("end" , ()=>{
+  console.log(readcount)
+})
